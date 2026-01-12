@@ -81,15 +81,15 @@ const Forms = () => {
         if(flag && userInfo.email && userInfo.password && userInfo.name){
             firebase.auth().createUserWithEmailAndPassword(userInfo.email, userInfo.password)
             .then(res=>{
-                var newInfo={...userInfo};
+                const newInfo={...userInfo};
                  
                 setMessage("Form Submitted & New User Created");
                 document.getElementById("message").style.color="green";
             })
             .catch(function(error) {
                  
-                var errorCode = error.code;
-                var errorMessage = error.message;
+                const errorCode = error.code;
+                const errorMessage = error.message;
              
                 setMessage(errorMessage);
                 document.getElementById("message").style.color="red";
@@ -98,7 +98,7 @@ const Forms = () => {
         }else if(!flag && userInfo.email && userInfo.password){
             firebase.auth().signInWithEmailAndPassword(userInfo.email, userInfo.password)
             .then(res=>{
-                var newInfo={...userInfo};
+                const newInfo={...userInfo};
              
                  newInfo.state=true;
                  
@@ -112,8 +112,8 @@ const Forms = () => {
             })
             .catch(function(error) {
                 // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
+                const errorCode = error.code;
+                const errorMessage = error.message;
                 // console.log(errorMessage);
                 setMessage(errorMessage);
                 document.getElementById("message").style.color="red";
@@ -127,7 +127,7 @@ const Forms = () => {
 
     function logout(){
         firebase.auth().signOut().then(function() {
-            var newInfo={};
+            const newInfo={};
             newInfo.name="";
             newInfo.email="";
             newInfo.state=false;
