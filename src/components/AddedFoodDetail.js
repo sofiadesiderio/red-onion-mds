@@ -1,16 +1,17 @@
-import React from 'react';
 import './style.css';
-import {Card, Form, Button } from 'react-bootstrap';
+import {Card, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 export default function AddedFoodDetail(props) {
    
 
-  const {id,type,name,price,count,shortDescription,fullDescription}=props.infos;
+  const { id, name, price, count } = props.infos;
+      
   const image=props.infos.images[0];
 
   return (
-    <div class=" row border justify-content-center align-items-center my-3 p-3" >
-      <img className="col-lg-4 col-md-12 col-sm-12 col-12"   src={image} style={{maxWidth:"200px"}} />
+    <div className=" row border justify-content-center align-items-center my-3 p-3" >
+      <img className="col-lg-4 col-md-12 col-sm-12 col-12" alt="food" src={image} style={{maxWidth:"200px"}} />
       <div className="col-lg-8 col-md-12 col-sm-12 col-12">
           <h4>{name}</h4>
           <Card.Text>
@@ -22,3 +23,20 @@ export default function AddedFoodDetail(props) {
     </div>
   );
 }
+
+AddedFoodDetail.propTypes = {
+    infos: PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+            .isRequired,
+        type: PropTypes.string,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+            .isRequired,
+        count: PropTypes.number.isRequired,
+        shortDescription: PropTypes.string,
+        fullDescription: PropTypes.string,
+        images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    }).isRequired,
+
+    removeItem: PropTypes.func.isRequired,
+};

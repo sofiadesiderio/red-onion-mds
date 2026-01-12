@@ -50,18 +50,30 @@ const FoodDetails = () => {
                     </button>
 
                     <div className='mt-4'>
-                        <img
+                        <button
+                            type='button'
                             onClick={() => setPhoto(detail.images[0])}
-                            className='mx-2'
-                            style={{ maxWidth: '150px' }}
-                            src={detail.images[0]}
-                        />
-                        <img
+                            className='btn p-0 mx-2'
+                            style={{ border: 'none', background: 'none' }}
+                        >
+                            <img
+                                style={{ maxWidth: '150px' }}   
+                                src={detail.images[0]}
+                                alt={detail.name}
+                            />
+                        </button>
+                        <button
+                            type='button'
                             onClick={() => setPhoto(detail.images[1])}
-                            className='mx-2'
-                            style={{ maxWidth: '150px' }}
-                            src={detail.images[1]}
-                        />
+                            className='btn p-0 mx-2'
+                            style={{ border: 'none', background: 'none' }}
+                        >
+                            <img
+                                style={{ maxWidth: '150px' }}
+                                src={detail.images[1]}
+                                alt={detail.name}
+                            />
+                        </button>
                     </div>
                 </div>
 
@@ -69,6 +81,7 @@ const FoodDetails = () => {
                     <img
                         style={{ maxWidth: '500px', width: '90%' }}
                         src={photo}
+                        alt='food'
                     />
                 </div>
             </div>

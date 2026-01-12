@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import './style.css';
 import Data from './Data';
-import { addToDatabaseCart, getDatabaseCart } from './databaseManager';
+import { getDatabaseCart } from './databaseManager';
 import CompletedPayment from './CompletedPayment';
 import { useHistory } from 'react-router-dom';
 const CheckOut = () => {
@@ -47,11 +47,11 @@ const CheckOut = () => {
     }, 0);
 
     const vat = 15;
-    let tax = parseInt(totalPayment) / 100;
-    tax = parseFloat(tax * parseInt(vat));
+    let tax = Number.parseInt(totalPayment) / 100;
+    tax = Number.parseFloat(tax * Number.parseInt(vat));
     tax = tax.toFixed(2);
 
-    let inTotal = parseFloat(totalPayment + tax + 50);
+    let inTotal = Number.parseFloat(totalPayment + tax + 50);
 
     inTotal = inTotal.toFixed(2);
 

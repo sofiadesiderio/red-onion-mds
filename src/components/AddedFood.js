@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
 import './style.css';
 import Data from './Data';
 import {
-    addToDatabaseCart,
     getDatabaseCart,
     removeFromDatabaseCart,
 } from './databaseManager';
@@ -33,8 +31,8 @@ const AddedFood = () => {
     }, 0);
 
     const vat = 15;
-    let tax = parseInt(totalPayment) / 100;
-    tax = tax * parseInt(vat);
+    let tax = Number.parseInt(totalPayment) / 100;
+    tax = tax * Number.parseInt(vat);
 
     let inTotal = totalPayment + tax + 50;
 

@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Data from './Data';
 import FoodCart from './FoodCart';
 import './style.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const DataLoad = () => {
     const [filter, setFilter] = useState('All');
 
     const [data, setData] = useState([]);
-
-    const [flag, setFlag] = useState(false);
 
     useEffect(() => {
         if (filter === 'All') {
