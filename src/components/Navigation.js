@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import './style.css';
 import cart from './resources/cart.svg';
 import logo2 from './resources/logo2.png';
 import { Link } from 'react-router-dom';
 import './style.css';
 
 import { UserContext } from '../App';
+
 const Navigation = () => {
-    const [user, setUser] = useContext(UserContext);
+    const [user] = useContext(UserContext);
+
     console.log(user);
+
     return (
         <Navbar bg='light' className='sticky-top' expand='lg'>
             <div className='container'>

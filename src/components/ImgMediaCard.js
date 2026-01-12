@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -25,14 +26,19 @@ export default function ImgMediaCard(props) {
             <CardActionArea>
                 <CardMedia
                     component='img'
-                    alt='Contemplative Reptile'
+                    alt={title}
                     height='340'
                     image={image}
-                    title='Contemplative Reptile'
+                    title={title}
                 />
                 <CardContent>
                     <Typography gutterBottom variant='h5' component='h2'>
-                        <img src={icon} alt='food card' /> {title}
+                        <img
+                            src={icon}
+                            alt='icon'
+                            style={{ marginRight: '5px' }}
+                        />{' '}
+                        {title}
                     </Typography>
                     <Typography
                         variant='body2'
@@ -54,3 +60,12 @@ export default function ImgMediaCard(props) {
         </Card>
     );
 }
+
+ImgMediaCard.propTypes = {
+    info: PropTypes.shape({
+        description: PropTypes.string.isRequired,
+        icon: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+    }).isRequired,
+};

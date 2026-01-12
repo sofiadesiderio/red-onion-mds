@@ -49,9 +49,9 @@
 }
 
 .btn-select:focus {
-    color: red !important;
-    border-bottom: 3px solid red !important;
-    background-color: white !important;
+    color: #D30000 !important; 
+    border-bottom: 3px solid #D30000 !important; 
+    background-color: #f1f1f1 !important;
     border-radius: 0px;
     box-shadow: none !important;
 }

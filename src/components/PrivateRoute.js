@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { UserContext } from '../App';
 
 function PrivateRoute({ children, ...rest }) {
-    const [user, setUser] = useContext(UserContext);
+    const [user] = useContext(UserContext);
+
     return (
         <Route
             {...rest}
@@ -22,5 +24,9 @@ function PrivateRoute({ children, ...rest }) {
         />
     );
 }
+
+PrivateRoute.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 export default PrivateRoute;
