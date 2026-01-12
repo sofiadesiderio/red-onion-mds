@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import Data from './Data';
-import {
-    getDatabaseCart,
-    removeFromDatabaseCart,
-} from './databaseManager';
+import { getDatabaseCart, removeFromDatabaseCart } from './databaseManager';
 import AddedFoodDetail from './AddedFoodDetail';
 import { useHistory } from 'react-router-dom';
 const AddedFood = () => {
@@ -59,14 +56,15 @@ const AddedFood = () => {
         <div className='container'>
             <div className='row'>
                 <div className='col-lg-7 col-md-12 col-sm-12 col-12 order-lg-first order-md-last order-sm-last order-last'>
-                    {foods &&
-                        foods.map((key) => (
+                    {foods ? (
+                        foods.map((key, index) => (
                             <AddedFoodDetail
                                 removeItem={removeItem}
                                 infos={key}
+                                key={index}
                             />
-                        ))}
-                    {foods.length == 0 && (
+                        ))
+                    ) : (
                         <h4 className='text-center text-danger mt-5'>
                             Cart is empty
                         </h4>

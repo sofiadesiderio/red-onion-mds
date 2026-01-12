@@ -10,9 +10,9 @@ const FoodDetails = () => {
     const [foodCart, setFoodCart] = useContext(FoodContext);
     const [count, setCount] = useState(1);
     const { id } = useParams();
-    const food = Data.filter((key) => key.id == id);
+    const food = Data.find((key) => key.id === id);
 
-    const detail = food[0];
+    const detail = food;
     const [photo, setPhoto] = useState(detail.images[0]);
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const FoodDetails = () => {
                             style={{ border: 'none', background: 'none' }}
                         >
                             <img
-                                style={{ maxWidth: '150px' }}   
+                                style={{ maxWidth: '150px' }}
                                 src={detail.images[0]}
                                 alt={detail.name}
                             />

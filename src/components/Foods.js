@@ -13,7 +13,7 @@ const Foods = () => {
         <div className="container">
             <div className="row align-items-center justify-content-center mt-5">
                     {
-                        data.map(key => <FoodCart info={key}/>)
+                        data.map((key, index) => <FoodCart info={key} key={index}/>)
                     }
                 </div>
         </div>

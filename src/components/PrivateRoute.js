@@ -1,35 +1,26 @@
-import React, {useContext} from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    Redirect
-  } from "react-router-dom";
-  import {UserContext} from '../App';
+import React, { useContext } from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { UserContext } from '../App';
 
 function PrivateRoute({ children, ...rest }) {
-      
-    const [user,setUser]=useContext(UserContext);
-    console.log(user);
-    let values=user;
+    const [user, setUser] = useContext(UserContext);
     return (
-      <Route
-        {...rest}
-        render={({ location }) =>
-          user.email ? ( 
-            children
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/form",
-                state: { from: location }
-              }}
-            />
-          )
-        }
-      />
+        <Route
+            {...rest}
+            render={({ location }) =>
+                user.email ? (
+                    children
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/form',
+                            state: { from: location },
+                        }}
+                    />
+                )
+            }
+        />
     );
-  }
+}
 
 export default PrivateRoute;
