@@ -1,21 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Data from './Data';
 import FoodCart from './FoodCart';
 
 const Foods = () => {
-    const [data,setData]=useState([]);
-    
+    const [data, setData] = useState([]);
 
     useEffect(() => {
-        setData(Data)
-    }, [])
+        setData(Data);
+    }, []);
     return (
-        <div className="container">
-            <div className="row align-items-center justify-content-center mt-5">
-                    {
-                        data.map((key, index) => <FoodCart info={key} key={index}/>)
-                    }
-                </div>
+        <div className='container'>
+            <div className='row align-items-center justify-content-center mt-5'>
+                {data.map((item) => (
+                    <FoodCart info={item} key={item.id} />
+                ))}
+            </div>
         </div>
     );
 };

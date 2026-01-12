@@ -25,8 +25,8 @@ const Description = () => {
             </div>
             <div className='container'>
                 <div className='row justify-content-center align-items-center'>
-                    {data.map((key, index) => (
-                        <ImgMediaCard info={key} key={index} />
+                    {data.map((item) => (
+                        <ImgMediaCard info={item} key={item.id} />
                     ))}
                 </div>
             </div>

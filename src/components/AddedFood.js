@@ -57,11 +57,11 @@ const AddedFood = () => {
             <div className='row'>
                 <div className='col-lg-7 col-md-12 col-sm-12 col-12 order-lg-first order-md-last order-sm-last order-last'>
                     {foods ? (
-                        foods.map((key, index) => (
+                        foods.map((item) => (
                             <AddedFoodDetail
+                                key={item.id}
                                 removeItem={removeItem}
-                                infos={key}
-                                key={index}
+                                infos={item}
                             />
                         ))
                     ) : (

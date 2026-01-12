@@ -50,8 +50,8 @@ const DataLoad = () => {
 
             <div className='container'>
                 <div className='row align-items-center justify-content-center mt-5'>
-                    {data.map((key, index) => (
-                        <FoodCart info={key} key={index} />
+                    {data.map((item) => (
+                        <FoodCart info={item} key={item.id} />
                     ))}
                 </div>
                 <div className='d-block mx-auto' style={{ width: '135px' }}>
