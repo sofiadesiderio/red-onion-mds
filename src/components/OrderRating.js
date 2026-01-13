@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 import './style.css';
 
@@ -32,13 +33,28 @@ const OrderRating = ({ show, onClose, orderNumber }) => {
         }, 2000);
     };
 
+    const handleStarClick = (star) => {
+        setRating(star);
+    };
+
+    const handleStarKeyPress = (e, star) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setRating(star);
+        }
+    };
+
     const renderStars = () => {
         return [1, 2, 3, 4, 5].map((star) => (
             <span
                 key={star}
-                onClick={() => setRating(star)}
+                role="button"
+                tabIndex={0}
+                onClick={() => handleStarClick(star)}
+                onKeyPress={(e) => handleStarKeyPress(e, star)}
                 onMouseEnter={() => setHoveredRating(star)}
                 onMouseLeave={() => setHoveredRating(0)}
+                aria-label={`Avaliar com ${star} estrela${star > 1 ? 's' : ''}`}
                 style={{
                     fontSize: '3rem',
                     cursor: 'pointer',
@@ -131,6 +147,12 @@ const OrderRating = ({ show, onClose, orderNumber }) => {
             )}
         </Modal>
     );
+};
+
+OrderRating.propTypes = {
+    show: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    orderNumber: PropTypes.string.isRequired,
 };
 
 export default OrderRating;
