@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './style.css';
 import Data from './Data';
-import { getDatabaseCart, removeFromDatabaseCart } from './databaseManager';
+import { getDatabaseCart, removeFromDatabaseCart, addToDatabaseCart, clearCart } from './databaseManager';
 import AddedFoodDetail from './AddedFoodDetail';
 import { useHistory } from 'react-router-dom';
+import { UserContext } from '../App';
+
 const AddedFood = () => {
     const [foods, setFoods] = useState([]);
+    const [user] = useContext(UserContext);
 
     let history = useHistory();
 
@@ -13,7 +16,7 @@ const AddedFood = () => {
         const data = getDatabaseCart();
         const item_keys = Object.keys(data);
         const added_items = item_keys.map((key) => {
-            const item = Data.find((id) => id.id == key);
+            const item = Data.find((id) => id.id === Number(key));
             item.count = data[key];
             return item;
         });
@@ -47,20 +50,73 @@ const AddedFood = () => {
     }
 
     function removeItem(id) {
-        const items = foods.filter((key) => key.id != id);
+        const items = foods.filter((key) => key.id !== id);
         setFoods(items);
         removeFromDatabaseCart(id);
+    }
+
+    function increaseQuantity(id) {
+        const updatedFoods = foods.map((item) => {
+            if (item.id === id) {
+                item.count += 1;
+                addToDatabaseCart(id, item.count);
+            }
+            return item;
+        });
+        setFoods([...updatedFoods]);
+    }
+
+    function decreaseQuantity(id) {
+        const updatedFoods = foods.map((item) => {
+            if (item.id === id && item.count > 1) {
+                item.count -= 1;
+                addToDatabaseCart(id, item.count);
+            }
+            return item;
+        });
+        setFoods([...updatedFoods]);
+    }
+
+    function handleClearCart() {
+        if (window.confirm('Tem certeza que deseja limpar o carrinho?')) {
+            clearCart();
+            setFoods([]);
+        }
+    }
+
+    // Verificar se está logado
+    if (!user.state) {
+        return (
+            <div className='container mt-5'>
+                <div className='text-center'>
+                    <h3 className='text-danger mb-4'>
+                        <i className='fas fa-lock'></i> Acesso Restrito
+                    </h3>
+                    <p className='text-muted mb-4'>
+                        Você precisa estar logado para acessar o carrinho.
+                    </p>
+                    <button
+                        onClick={() => history.push('/form')}
+                        className='btn btn-danger btn-lg'
+                    >
+                        Fazer Login
+                    </button>
+                </div>
+            </div>
+        );
     }
 
     return (
         <div className='container'>
             <div className='row'>
                 <div className='col-lg-7 col-md-12 col-sm-12 col-12 order-lg-first order-md-last order-sm-last order-last'>
-                    {foods ? (
+                    {foods && foods.length > 0 ? (
                         foods.map((item) => (
                             <AddedFoodDetail
                                 key={item.id}
                                 removeItem={removeItem}
+                                increaseQuantity={increaseQuantity}
+                                decreaseQuantity={decreaseQuantity}
                                 infos={item}
                             />
                         ))
@@ -100,12 +156,20 @@ const AddedFood = () => {
                             <span>Total</span> <span>${inTotal}</span>
                         </h5>
                         {inTotal > 0 && (
-                            <button
-                                onClick={checkOut}
-                                className='btn btn-success mt-4'
-                            >
-                                Proceed to CheckOut
-                            </button>
+                            <>
+                                <button
+                                    onClick={checkOut}
+                                    className='btn btn-success btn-block mt-4'
+                                >
+                                    Proceed to CheckOut
+                                </button>
+                                <button
+                                    onClick={handleClearCart}
+                                    className='btn btn-outline-danger btn-block mt-2'
+                                >
+                                    <i className='fas fa-trash-alt'></i> Limpar Carrinho
+                                </button>
+                            </>
                         )}
 
                         <p

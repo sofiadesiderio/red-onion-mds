@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../App';
 import { Button, Form } from 'react-bootstrap';
 import firebase from 'firebase/app';
@@ -8,12 +8,20 @@ import firebaseConfig from './firebaseConfig';
 import './style.css';
 import { useHistory, useLocation } from 'react-router-dom';
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
+// Configurar persistência do Firebase para manter login por 7 dias
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .catch((error) => {
+        console.error('Erro ao configurar persistência:', error);
+    });
 
 const Forms = () => {
     const history = useHistory();
     const location = useLocation();
-    const { from } = location.state || { from: { pathname: '/form' } };
+    const { from } = location.state || { from: { pathname: '/' } };
 
     const [flag, setFlag] = useState(false);
 
@@ -29,34 +37,31 @@ const Forms = () => {
     function changeFunc(e) {
         let isFormValid = true;
 
+        // Sempre atualiza o valor no estado
+        let newInfo = { ...userInfo };
+        newInfo[e.target.name] = e.target.value;
+        setUserInfo(newInfo);
+
+        // Validação de email
         if (e.target.name === 'email') {
             isFormValid = /\S+@\S+\.\S+/.test(e.target.value);
 
-            if (isFormValid) {
-                document.getElementById('email-error').style.display = 'none';
-            } else {
-                document.getElementById('email-error').style.display = 'block';
+            const emailError = document.getElementById('email-error');
+            if (emailError) {
+                emailError.style.display = isFormValid ? 'none' : 'block';
             }
         }
 
+        // Validação de senha
         if (e.target.name === 'password') {
             const isPasswordValid = e.target.value.length > 6;
             const passwordHasNumber = /\d/.test(e.target.value);
             isFormValid = passwordHasNumber && isPasswordValid;
 
-            if (isFormValid) {
-                document.getElementById('pass-error').style.display = 'none';
-            } else {
-                document.getElementById('pass-error').style.display = 'block';
+            const passError = document.getElementById('pass-error');
+            if (passError) {
+                passError.style.display = isFormValid ? 'none' : 'block';
             }
-        }
-
-        console.log(isFormValid);
-
-        if (isFormValid) {
-            let newInfo = { ...userInfo };
-            newInfo[e.target.name] = e.target.value;
-            setUserInfo(newInfo);
         }
     }
 
@@ -70,13 +75,15 @@ const Forms = () => {
                 )
                 .then((res) => {
                     setMessage('Form Submitted & New User Created');
-                    document.getElementById('message').style.color = 'green';
+                    const msgElement = document.getElementById('message');
+                    if (msgElement) msgElement.style.color = 'green';
                 })
                 .catch(function (error) {
                     const errorMessage = error.message;
 
                     setMessage(errorMessage);
-                    document.getElementById('message').style.color = 'red';
+                    const msgElement = document.getElementById('message');
+                    if (msgElement) msgElement.style.color = 'red';
                 });
         } else if (!flag && userInfo.email && userInfo.password) {
             firebase
@@ -84,17 +91,22 @@ const Forms = () => {
                 .signInWithEmailAndPassword(userInfo.email, userInfo.password)
                 .then((res) => {
                     const newInfo = { ...userInfo };
-
                     newInfo.state = true;
-
                     setUser(newInfo);
-
-                    history.replace(from);
+                    setMessage('Login successful!');
+                    const msgElement = document.getElementById('message');
+                    if (msgElement) msgElement.style.color = 'green';
+                    
+                    // Redirect after a brief delay
+                    setTimeout(() => {
+                        history.replace(from);
+                    }, 500);
                 })
                 .catch(function (error) {
                     const errorMessage = error.message;
                     setMessage(errorMessage);
-                    document.getElementById('message').style.color = 'red';
+                    const msgElement = document.getElementById('message');
+                    if (msgElement) msgElement.style.color = 'red';
                 });
         }
 
@@ -112,7 +124,8 @@ const Forms = () => {
                 newInfo.state = false;
                 setUser(newInfo);
                 setMessage('Logged Out');
-                document.getElementById('message').style.color = 'Black';
+                const msgElement = document.getElementById('message');
+                if (msgElement) msgElement.style.color = 'Black';
             })
             .catch(function (error) {});
     }
@@ -153,7 +166,7 @@ const Forms = () => {
                             <Form.Group controlId='Name'>
                                 <Form.Control
                                     className='custom-input '
-                                    onBlur={changeFunc}
+                                    onChange={changeFunc}
                                     name='name'
                                     type='text'
                                     placeholder='Full Name'
@@ -164,7 +177,7 @@ const Forms = () => {
                         <Form.Group controlId='Email' className=''>
                             <Form.Control
                                 className='custom-input  '
-                                onBlur={changeFunc}
+                                onChange={changeFunc}
                                 name='email'
                                 type='email'
                                 placeholder='Email'
@@ -181,7 +194,7 @@ const Forms = () => {
                         <Form.Group controlId='formBasicPassword my-5'>
                             <Form.Control
                                 className='custom-input  '
-                                onBlur={changeFunc}
+                                onChange={changeFunc}
                                 name='password'
                                 type='password'
                                 placeholder='Password'

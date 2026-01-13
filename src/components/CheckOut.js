@@ -18,6 +18,7 @@ const CheckOut = () => {
         road: '',
         city: '',
         phone: '',
+        orderNotes: '',
     });
     const [foods, setFoods] = useState([]);
     useEffect(() => {
@@ -103,10 +104,21 @@ const CheckOut = () => {
         console.log('Ok');
         const cardNumber = document.getElementById('card-number').value;
         console.log(cardNumber);
-        if (cardNumber == 15101122) {
+        if (cardNumber === 15101122 || cardNumber === '15101122') {
             setCompleted(true);
             document.getElementById('card-num-error').style.display = 'none';
             document.getElementById('proceed-error').style.display = 'none';
+            
+            // Salvar dados do pedido para tracking
+            const orderData = {
+                address,
+                foods,
+                totalPayment,
+                tax,
+                total: inTotal,
+                orderDate: new Date().toISOString(),
+            };
+            localStorage.setItem('currentOrder', JSON.stringify(orderData));
         } else {
             //card-error
             document.getElementById('card-num-error').style.display = 'block';
@@ -143,7 +155,7 @@ const CheckOut = () => {
                                     <h6>Road : {address.road}</h6>
                                     <h6>City : {address.city}</h6>
                                     <h6>Phone : {address.phone}</h6>
-                                    <Form.Group for='card-number'>
+                                    <Form.Group htmlFor='card-number'>
                                         <p>
                                             As it is a demo project use 15101122
                                             as your credit card number
@@ -279,6 +291,20 @@ const CheckOut = () => {
                                     >
                                         Enter your phone number
                                     </p>
+                                </Form.Group>
+
+                                <Form.Group id='orderNotes'>
+                                    <Form.Control
+                                        as='textarea'
+                                        rows={3}
+                                        onBlur={changeFunc}
+                                        id='orderNotes'
+                                        name='orderNotes'
+                                        placeholder='Order Notes (optional): E.g., No onions, extra sauce, doorbell broken...'
+                                    />
+                                    <small className='text-muted'>
+                                        Add any special instructions for your order
+                                    </small>
                                 </Form.Group>
 
                                 <button

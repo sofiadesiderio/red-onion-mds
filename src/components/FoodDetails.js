@@ -10,10 +10,10 @@ const FoodDetails = () => {
     const [foodCart, setFoodCart] = useContext(FoodContext);
     const [count, setCount] = useState(1);
     const { id } = useParams();
-    const food = Data.find((key) => key.id === id);
+    const food = Data.find((key) => key.id === Number(id));
 
     const detail = food;
-    const [photo, setPhoto] = useState(detail.images[0]);
+    const [photo, setPhoto] = useState(detail?.images?.[0] || '');
 
     useEffect(() => {
         const foods = getDatabaseCart();
@@ -25,6 +25,14 @@ const FoodDetails = () => {
         const newFood = { ...foodCart, food };
         addToDatabaseCart(food.id, food.count);
         setFoodCart(newFood);
+    }
+
+    if (!detail) {
+        return (
+            <div className='container mt-5'>
+                <h3 className='text-center'>Food item not found</h3>
+            </div>
+        );
     }
 
     return (

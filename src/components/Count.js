@@ -13,7 +13,7 @@ const Count = (props) => {
     return (
         <div className="d-flex">
             <button className="btn btn-light" onClick={()=>setCount(count+1)}>+</button>
-            <input type="text" className="form-control input-custom" id="number" value={count}   />
+            <input type="text" className="form-control input-custom" id="number" value={count} readOnly />
             <button onClick={()=>decrease(count-1)} className="btn btn-light">-</button>
         </div>
     );
