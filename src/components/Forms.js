@@ -15,7 +15,7 @@ if (!firebase.apps.length) {
 const Forms = () => {
     const history = useHistory();
     const location = useLocation();
-    const { from } = location.state || { from: { pathname: '/form' } };
+    const { from } = location.state || { from: { pathname: '/' } };
 
     const [flag, setFlag] = useState(false);
 

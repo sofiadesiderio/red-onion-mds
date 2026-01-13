@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './style.css';
 import Data from './Data';
-import { getDatabaseCart, removeFromDatabaseCart, addToDatabaseCart } from './databaseManager';
+import { getDatabaseCart, removeFromDatabaseCart, addToDatabaseCart, clearCart } from './databaseManager';
 import AddedFoodDetail from './AddedFoodDetail';
 import { useHistory } from 'react-router-dom';
+import { UserContext } from '../App';
+
 const AddedFood = () => {
     const [foods, setFoods] = useState([]);
+    const [user] = useContext(UserContext);
 
     let history = useHistory();
 
@@ -74,6 +77,33 @@ const AddedFood = () => {
         setFoods([...updatedFoods]);
     }
 
+    function handleClearCart() {
+        if (window.confirm('Tem certeza que deseja limpar o carrinho?')) {
+            clearCart();
+            setFoods([]);
+        }
+    }
+
+    // Verificar se está logado
+    if (!user.state) {
+        return (
+            <div className='container mt-5'>
+                <div className='text-center'>
+                    <h3 className='text-danger mb-4'>🔒 Acesso Restrito</h3>
+                    <p className='text-muted mb-4'>
+                        Você precisa estar logado para acessar o carrinho.
+                    </p>
+                    <button
+                        onClick={() => history.push('/form')}
+                        className='btn btn-danger btn-lg'
+                    >
+                        Fazer Login
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className='container'>
             <div className='row'>
@@ -124,12 +154,20 @@ const AddedFood = () => {
                             <span>Total</span> <span>${inTotal}</span>
                         </h5>
                         {inTotal > 0 && (
-                            <button
-                                onClick={checkOut}
-                                className='btn btn-success mt-4'
-                            >
-                                Proceed to CheckOut
-                            </button>
+                            <>
+                                <button
+                                    onClick={checkOut}
+                                    className='btn btn-success btn-block mt-4'
+                                >
+                                    Proceed to CheckOut
+                                </button>
+                                <button
+                                    onClick={handleClearCart}
+                                    className='btn btn-outline-danger btn-block mt-2'
+                                >
+                                    🗑️ Limpar Carrinho
+                                </button>
+                            </>
                         )}
 
                         <p

@@ -14,6 +14,7 @@ import Forms from './components/Forms';
 import CheckOut from './components/CheckOut';
 import AddedFood from './components/AddedFood';
 import OrderConfirmed from './components/OrderConfirmed';
+import OrderTracking from './components/OrderTracking';
 import PrivateRoute from './components/PrivateRoute';
 import Contact from './components/Contact';
 export const UserContext = React.createContext();
@@ -47,6 +48,10 @@ function App() {
                                 <OrderConfirmed />
                             </Route>
 
+                            <Route path='/tracking'>
+                                <OrderTracking />
+                            </Route>
+
                             <Route path='/contact'>
                                 <Contact />
                             </Route>
@@ -55,9 +60,9 @@ function App() {
                                 <CheckOut />
                             </Route>
 
-                            <PrivateRoute path='/addedfood'>
+                            <Route path='/addedfood'>
                                 <AddedFood />
-                            </PrivateRoute>
+                            </Route>
 
                             <Route path='/form'>
                                 <Forms />

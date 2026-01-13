@@ -37,11 +37,16 @@ const processOrder = (cart) => {
     localStorage.removeItem(getDataKey());
 };
 
+const clearCart = () => {
+    localStorage.removeItem(getDataKey());
+};
+
 export {
     addToDatabaseCart,
     getDatabaseCart,
     removeFromDatabaseCart,
     processOrder,
+    clearCart,
 };
 
 const localStorage =
