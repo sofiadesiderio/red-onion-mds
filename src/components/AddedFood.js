@@ -78,7 +78,7 @@ const AddedFood = () => {
     }
 
     function handleClearCart() {
-        if (window.confirm('Tem certeza que deseja limpar o carrinho?')) {
+        if (globalThis.confirm('Tem certeza que deseja limpar o carrinho?')) {
             clearCart();
             setFoods([]);
         }
