@@ -14,10 +14,7 @@ const FoodCart = (props) => {
                 <Card.Body>
                     <Card.Title className="text-center card-name">{name}</Card.Title>
                     <p className="text-center card-description">{shortDescription}</p>
-                    <Card.Text>
                     <h5 className="text-center card-price">${price}</h5>
-                    </Card.Text>
-                    
                 </Card.Body>
                 </Card>
             </Link>

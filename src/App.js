@@ -33,7 +33,6 @@ function App() {
 
     const foodCartValue = useMemo(() => [foodCart, setFoodCart], [foodCart]);
 
-    console.log(user);
     return (
             <UserContext.Provider value={userValue}>
                 <FoodContext.Provider value={foodCartValue}>

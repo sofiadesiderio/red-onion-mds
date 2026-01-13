@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import Data from './Data';
-import { getDatabaseCart, removeFromDatabaseCart } from './databaseManager';
+import { getDatabaseCart, removeFromDatabaseCart, addToDatabaseCart } from './databaseManager';
 import AddedFoodDetail from './AddedFoodDetail';
 import { useHistory } from 'react-router-dom';
 const AddedFood = () => {
@@ -13,7 +13,7 @@ const AddedFood = () => {
         const data = getDatabaseCart();
         const item_keys = Object.keys(data);
         const added_items = item_keys.map((key) => {
-            const item = Data.find((id) => id.id == key);
+            const item = Data.find((id) => id.id === Number(key));
             item.count = data[key];
             return item;
         });
@@ -47,20 +47,44 @@ const AddedFood = () => {
     }
 
     function removeItem(id) {
-        const items = foods.filter((key) => key.id != id);
+        const items = foods.filter((key) => key.id !== id);
         setFoods(items);
         removeFromDatabaseCart(id);
+    }
+
+    function increaseQuantity(id) {
+        const updatedFoods = foods.map((item) => {
+            if (item.id === id) {
+                item.count += 1;
+                addToDatabaseCart(id, item.count);
+            }
+            return item;
+        });
+        setFoods([...updatedFoods]);
+    }
+
+    function decreaseQuantity(id) {
+        const updatedFoods = foods.map((item) => {
+            if (item.id === id && item.count > 1) {
+                item.count -= 1;
+                addToDatabaseCart(id, item.count);
+            }
+            return item;
+        });
+        setFoods([...updatedFoods]);
     }
 
     return (
         <div className='container'>
             <div className='row'>
                 <div className='col-lg-7 col-md-12 col-sm-12 col-12 order-lg-first order-md-last order-sm-last order-last'>
-                    {foods ? (
+                    {foods && foods.length > 0 ? (
                         foods.map((item) => (
                             <AddedFoodDetail
                                 key={item.id}
                                 removeItem={removeItem}
+                                increaseQuantity={increaseQuantity}
+                                decreaseQuantity={decreaseQuantity}
                                 infos={item}
                             />
                         ))
