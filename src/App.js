@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import './App.css';
 import Navigation from './components/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,6 +17,14 @@ import OrderConfirmed from './components/OrderConfirmed';
 import OrderTracking from './components/OrderTracking';
 import PrivateRoute from './components/PrivateRoute';
 import Contact from './components/Contact';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseConfig from './components/firebaseConfig';
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
 export const UserContext = React.createContext();
 export const FoodContext = React.createContext();
 
@@ -29,6 +37,27 @@ function App() {
         password: '',
         state: false,
     });
+
+    // Restaurar sessão do Firebase ao carregar a página
+    useEffect(() => {
+        const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
+            if (firebaseUser) {
+                setUser({
+                    email: firebaseUser.email,
+                    password: '',
+                    state: true,
+                });
+            } else {
+                setUser({
+                    email: '',
+                    password: '',
+                    state: false,
+                });
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     const userValue = useMemo(() => [user, setUser], [user]);
 

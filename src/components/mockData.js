@@ -46,31 +46,31 @@ export const orderStatus = {
     pending: {
         label: 'Pedido Recebido',
         description: 'Seu pedido foi recebido e está sendo processado',
-        icon: '📝',
+        icon: 'fa-clipboard-check',
         color: '#ffc107',
     },
     preparing: {
         label: 'Em Preparação',
         description: 'Estamos preparando seu pedido com carinho',
-        icon: '👨‍🍳',
+        icon: 'fa-utensils',
         color: '#17a2b8',
     },
     ready: {
         label: 'Pronto para Entrega',
         description: 'Seu pedido está pronto e aguardando o entregador',
-        icon: '✅',
+        icon: 'fa-check-circle',
         color: '#28a745',
     },
     delivering: {
         label: 'Em Rota de Entrega',
         description: 'Seu pedido está a caminho',
-        icon: '🚴',
+        icon: 'fa-motorcycle',
         color: '#007bff',
     },
     delivered: {
         label: 'Entregue',
         description: 'Pedido entregue com sucesso. Bom apetite!',
-        icon: '🎉',
+        icon: 'fa-gift',
         color: '#28a745',
     },
 };

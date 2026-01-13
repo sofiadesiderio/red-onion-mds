@@ -51,7 +51,9 @@ const OrderTracking = () => {
             <div className='row justify-content-center'>
                 <div className='col-lg-8 col-md-10 col-12'>
                     <div className='text-center mb-5'>
-                        <h2 className='text-success mb-3'>✓ Pedido Confirmado!</h2>
+                        <h2 className='text-success mb-3'>
+                            <i className='fas fa-check-circle'></i> Pedido Confirmado!
+                        </h2>
                         <p className='text-muted'>Número do pedido: <strong>{orderNumber}</strong></p>
                         <p className='text-muted'>Tempo estimado: <strong>{estimatedTime}</strong></p>
                     </div>
@@ -71,7 +73,7 @@ const OrderTracking = () => {
                                         marginRight: '1.5rem',
                                     }}
                                 >
-                                    {status.icon}
+                                    <i className={`fas ${status.icon}`}></i>
                                 </div>
                                 <div>
                                     <h4 style={{ color: status.color, marginBottom: '0.5rem' }}>
@@ -121,7 +123,11 @@ const OrderTracking = () => {
                                                         fontSize: '1.2rem',
                                                     }}
                                                 >
-                                                    {isCompleted ? '✓' : value.icon}
+                                                    {isCompleted ? (
+                                                        <i className='fas fa-check'></i>
+                                                    ) : (
+                                                        <i className={`fas ${value.icon}`}></i>
+                                                    )}
                                                 </div>
                                                 {index < Object.keys(orderStatus).length - 1 && (
                                                     <div
@@ -179,7 +185,9 @@ const OrderTracking = () => {
                             {address.orderNotes && (
                                 <div className='mt-3 pt-3 border-top'>
                                     <p className='mb-2'>
-                                        <strong>📝 Observações do Pedido:</strong>
+                                        <strong>
+                                            <i className='fas fa-sticky-note'></i> Observações do Pedido:
+                                        </strong>
                                     </p>
                                     <p className='text-muted small' style={{
                                         backgroundColor: '#fff3cd',
@@ -208,7 +216,7 @@ const OrderTracking = () => {
                                     onClick={() => setShowRating(true)}
                                     className='btn btn-warning btn-lg mx-2 mb-2'
                                 >
-                                    ⭐ Avaliar Pedido
+                                    <i className='fas fa-star'></i> Avaliar Pedido
                                 </button>
                                 <button
                                     onClick={() => history.push('/foods')}

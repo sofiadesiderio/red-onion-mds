@@ -16,7 +16,7 @@ const OrderConfirmed = () => {
     return (
         <div className="container">
             <div className="text-center mt-5">
-                <div style={{ fontSize: '5rem' }}>✓</div>
+                <i className="fas fa-check-circle text-success" style={{ fontSize: '5rem' }}></i>
                 <h1 className="text-success my-4">Pedido Confirmado!</h1>
                 <p className="text-muted">Redirecionando para acompanhamento...</p>
                 <div className="spinner-border text-danger mt-3" role="status">

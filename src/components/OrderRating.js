@@ -67,7 +67,11 @@ const OrderRating = ({ show, onClose, orderNumber }) => {
         <Modal show={show} onHide={onClose} centered>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    {!submitted ? '⭐ Avalie seu pedido' : '✓ Avaliação enviada!'}
+                    {!submitted ? (
+                        <><i className='fas fa-star'></i> Avalie seu pedido</>
+                    ) : (
+                        <><i className='fas fa-check-circle'></i> Avaliação enviada!</>
+                    )}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -103,7 +107,7 @@ const OrderRating = ({ show, onClose, orderNumber }) => {
                     </>
                 ) : (
                     <div className='text-center py-4'>
-                        <div style={{ fontSize: '4rem', color: '#28a745' }}>✓</div>
+                        <i className='fas fa-check-circle text-success' style={{ fontSize: '4rem' }}></i>
                         <h4 className='text-success mt-3'>Obrigado pelo feedback!</h4>
                         <p className='text-muted'>
                             Sua avaliação nos ajuda a melhorar nossos serviços.

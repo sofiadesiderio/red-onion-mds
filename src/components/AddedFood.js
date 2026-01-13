@@ -89,7 +89,9 @@ const AddedFood = () => {
         return (
             <div className='container mt-5'>
                 <div className='text-center'>
-                    <h3 className='text-danger mb-4'>🔒 Acesso Restrito</h3>
+                    <h3 className='text-danger mb-4'>
+                        <i className='fas fa-lock'></i> Acesso Restrito
+                    </h3>
                     <p className='text-muted mb-4'>
                         Você precisa estar logado para acessar o carrinho.
                     </p>
@@ -165,7 +167,7 @@ const AddedFood = () => {
                                     onClick={handleClearCart}
                                     className='btn btn-outline-danger btn-block mt-2'
                                 >
-                                    🗑️ Limpar Carrinho
+                                    <i className='fas fa-trash-alt'></i> Limpar Carrinho
                                 </button>
                             </>
                         )}

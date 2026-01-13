@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../App';
 import { Button, Form } from 'react-bootstrap';
 import firebase from 'firebase/app';
@@ -11,6 +11,12 @@ import { useHistory, useLocation } from 'react-router-dom';
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
+
+// Configurar persistência do Firebase para manter login por 7 dias
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .catch((error) => {
+        console.error('Erro ao configurar persistência:', error);
+    });
 
 const Forms = () => {
     const history = useHistory();
