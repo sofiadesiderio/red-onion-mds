@@ -15,7 +15,6 @@ import CheckOut from './components/CheckOut';
 import AddedFood from './components/AddedFood';
 import OrderConfirmed from './components/OrderConfirmed';
 import OrderTracking from './components/OrderTracking';
-import PrivateRoute from './components/PrivateRoute';
 import Contact from './components/Contact';
 import firebase from 'firebase/app';
 import 'firebase/auth';

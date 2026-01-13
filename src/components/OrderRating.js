@@ -46,12 +46,10 @@ const OrderRating = ({ show, onClose, orderNumber }) => {
 
     const renderStars = () => {
         return [1, 2, 3, 4, 5].map((star) => (
-            <span
+            <button
                 key={star}
-                role="button"
-                tabIndex={0}
+                type="button"
                 onClick={() => handleStarClick(star)}
-                onKeyPress={(e) => handleStarKeyPress(e, star)}
                 onMouseEnter={() => setHoveredRating(star)}
                 onMouseLeave={() => setHoveredRating(0)}
                 aria-label={`Avaliar com ${star} estrela${star > 1 ? 's' : ''}`}
@@ -61,10 +59,13 @@ const OrderRating = ({ show, onClose, orderNumber }) => {
                     color: star <= (hoveredRating || rating) ? '#ffc107' : '#e4e5e9',
                     transition: 'color 0.2s',
                     marginRight: '0.5rem',
+                    border: 'none',
+                    background: 'transparent',
+                    padding: 0,
                 }}
             >
                 ★
-            </span>
+            </button>
         ));
     };
 
@@ -83,15 +84,23 @@ const OrderRating = ({ show, onClose, orderNumber }) => {
         <Modal show={show} onHide={onClose} centered>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    {!submitted ? (
-                        <><i className='fas fa-star'></i> Avalie seu pedido</>
-                    ) : (
+                    {submitted ? (
                         <><i className='fas fa-check-circle'></i> Avaliação enviada!</>
+                    ) : (
+                        <><i className='fas fa-star'></i> Avalie seu pedido</>
                     )}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {!submitted ? (
+                {submitted ? (
+                    <div className='text-center py-4'>
+                        <i className='fas fa-check-circle text-success' style={{ fontSize: '4rem' }}></i>
+                        <h4 className='text-success mt-3'>Obrigado pelo feedback!</h4>
+                        <p className='text-muted'>
+                            Sua avaliação nos ajuda a melhorar nossos serviços.
+                        </p>
+                    </div>
+                ) : (
                     <>
                         <div className='text-center mb-4'>
                             <p className='mb-3'>Como foi sua experiência com o pedido?</p>
@@ -121,14 +130,6 @@ const OrderRating = ({ show, onClose, orderNumber }) => {
                             Pedido #{orderNumber}
                         </small>
                     </>
-                ) : (
-                    <div className='text-center py-4'>
-                        <i className='fas fa-check-circle text-success' style={{ fontSize: '4rem' }}></i>
-                        <h4 className='text-success mt-3'>Obrigado pelo feedback!</h4>
-                        <p className='text-muted'>
-                            Sua avaliação nos ajuda a melhorar nossos serviços.
-                        </p>
-                    </div>
                 )}
             </Modal.Body>
             {!submitted && (
