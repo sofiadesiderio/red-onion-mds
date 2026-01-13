@@ -37,13 +37,6 @@ const OrderRating = ({ show, onClose, orderNumber }) => {
         setRating(star);
     };
 
-    const handleStarKeyPress = (e, star) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            setRating(star);
-        }
-    };
-
     const renderStars = () => {
         return [1, 2, 3, 4, 5].map((star) => (
             <button
